@@ -1,5 +1,6 @@
-import {useEffect, useState, useRef} from "react";
-import {AUTHOR} from "../../constants";
+import {useState} from 'react'
+import {AUTHOR} from '../../constants'
+import {Button} from '../ui/Button'
 
 import IButton from '@mui/material/Button';
 import ITextField from '@mui/material/TextField';
@@ -8,22 +9,20 @@ import ITypography from '@mui/material/Typography';
 
 export function Form({addMessage}) {
   const [text, setText] = useState('')
-  const myRef = useRef(null)
 
-  useEffect(() => {
-    myRef.current.focus();
-    console.log(myRef)
-  }, [])
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    //todo...
     addMessage({
       author: AUTHOR.user,
-      text: text
+      text
     })
 
     setText('')
   }
+
+  console.log('input', text)
+
   return (
     <>
       <ITypography variant="h4">
@@ -31,14 +30,13 @@ export function Form({addMessage}) {
       </ITypography>
       <form onSubmit={handleSubmit}>
         <ITextField
+          type="text"
+          value={text}
+          onChange={(event) => setText(event.target.value)}
           id="standard-basic"
           label="Enter message"
           variant="standard"
-          onChange={(event) => setText(event.target.value)}
-          value={text}
-          type="text"
           fullWidth
-          ref={myRef}
           autoFocus
         />
         <IButton
@@ -46,11 +44,12 @@ export function Form({addMessage}) {
           color='success'
           size='small'
           type='submit'
-          endIcon={<ISendIcon />}
+          endIcon={<ISendIcon/>}
           sx={{my: 2}}
         >
           Add message</IButton>
       </form>
+
     </>
   )
 }
