@@ -4,7 +4,6 @@ import IContainer from '@mui/material/Container';
 import IButton from '@mui/material/Button';
 
 import styles from './Header.module.css'
-import ISendIcon from "@mui/icons-material/Send";
 
 export const navigate = [
   {

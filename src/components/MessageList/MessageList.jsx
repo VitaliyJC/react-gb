@@ -24,7 +24,6 @@ export function MessageList({messages}) {
           <ITypography sx={{py: 2}}>
             {message.text}
           </ITypography>
-{/*{message.author}: {message.text}*/}
         </IBox>
       ))}
     </>
