@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 import {useParams, Navigate} from 'react-router-dom'
 
 import {Form} from '../components/Form/Form'
@@ -10,6 +10,7 @@ import IBox from "@mui/material/Box";
 import {styled} from '@mui/material/styles';
 import IPaper from '@mui/material/Paper';
 import IGrid from '@mui/material/Grid';
+import ITypography from "@mui/material/Typography";
 
 
 const Item = styled(IPaper)(({theme}) => ({
@@ -56,12 +57,19 @@ export function ChatsPage({onAddChat, onAddMessage, messages, chats}) {
       <IBox sx={{flexGrow: 1}}>
         <IGrid container spacing={0.5}>
           <IGrid item xs={3}>
-            <Item><ChatList chats={chats} onAddChat={onAddChat}/></Item>
+            <Item><ChatList chats={chats} onAddChat={onAddChat} /></Item>
           </IGrid>
           <IGrid item xs={9}>
             <Item sx={{px: 10}}>
-              <MessageList messages={chatId ? messages[chatId] : []}/>
-              <Form addMessage={handleAddMessage}/>
+              {
+                chatId ? <>
+                  <MessageList messages={chatId ? messages[chatId] : []}/>
+                  <Form addMessage={handleAddMessage}/>
+                  </> :
+                  <ITypography height='90vh' variant="h4">
+                    Выберите чат
+                  </ITypography>
+              }
             </Item>
           </IGrid>
         </IGrid>

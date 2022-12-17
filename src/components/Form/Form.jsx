@@ -1,6 +1,5 @@
 import {useState} from 'react'
 import {AUTHOR} from '../../constants'
-import {Button} from '../ui/Button'
 
 import IButton from '@mui/material/Button';
 import ITextField from '@mui/material/TextField';
@@ -12,7 +11,6 @@ export function Form({addMessage}) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    //todo...
     addMessage({
       author: AUTHOR.user,
       text

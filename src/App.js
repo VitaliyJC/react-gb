@@ -1,12 +1,15 @@
-import { Routes, Route } from 'react-router-dom'
-import { nanoid } from 'nanoid'
+import {Routes, Route} from 'react-router-dom'
+import {nanoid} from 'nanoid'
 
-import { Header } from './components/Header/Header'
-import { MainPage } from './pages/MainPage'
-import { ProfilePage } from './pages/ProfilePage'
-import { ChatsPage } from './pages/ChatsPage'
-import { ChatList } from './components/ChatList/ChatList'
-import { useState } from 'react'
+import {Header} from './components/Header/Header'
+import {MainPage} from './pages/MainPage'
+import {ProfilePage} from './pages/ProfilePage'
+import {ChatsPage} from './pages/ChatsPage'
+// import { ChatList } from './components/ChatList/ChatList'
+import {NotFound} from "./pages/NotFound";
+import {useState} from 'react'
+import {Provider} from "react-redux";
+import {store} from "./components/store";
 
 const degaultMessges = {
   default: [
@@ -46,25 +49,26 @@ export function App () {
 
   return (
     <>
-      {/* <Header /> */}
+      <Provider store={store}>
       <Routes>
         <Route path='/' element={<Header />}>
           <Route index element={<MainPage />} />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile" element={<ProfilePage/>}/>
           <Route path="chats">
-            <Route index element={<ChatList chats={chats} onAddChat={onAddChat} />} />
-            <Route 
-              path=":chatId" 
-              element={<ChatsPage chats={chats} 
-              messages={messages} 
-              onAddMessage={onAddMessage} 
-              onAddChat={onAddChat} />} 
+            <Route index element={<ChatsPage chats={chats} onAddChat={onAddChat}/>}/>
+            {/*<Route index element={<ChatList chats={chats} onAddChat={onAddChat} />} />*/}
+            <Route
+              path=":chatId"
+              element={<ChatsPage chats={chats}
+                                  messages={messages}
+                                  onAddMessage={onAddMessage}
+                                  onAddChat={onAddChat}/>}
             />
           </Route>
         </Route>
-
-        <Route path="*" element={<h2>404 Page not FOUND</h2>} />
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
+      </Provider>
     </>
   )
 }
