@@ -1,13 +1,17 @@
 import * as types from './types'
 
 const initialState = {
-  toggle: false
+  toggle: true
 }
 
-export const toggleReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case types.CHECKBOX:
-      return !state
+export const profileReducer = (state = initialState, action) => {
+  const {type} = action
+  switch (type) {
+    case types.TOGGLE_PROFILE:
+      return {
+        ...state,
+        visible: !state.visible
+      }
 
     default:
       return state

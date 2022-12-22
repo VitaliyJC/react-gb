@@ -1,5 +1,12 @@
-import {compose, createStore} from 'redux'
-import {toggleReducer} from "./profile/reducer";
+import {compose, createStore, combineReducers} from 'redux'
+import {profileReducer} from "./profile/reducer";
+import {messagesReducer} from "./messages/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-export const store = createStore(toggleReducer, composeEnhancers())
+
+const rootReducer = combineReducers({
+  profile: profileReducer,
+  messages: messagesReducer
+})
+
+export const store = createStore(rootReducer, composeEnhancers())

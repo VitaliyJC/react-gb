@@ -1,6 +1,5 @@
 import * as types from './types'
 
-export const changeCheckBox = (title) => ({
-  type: types.CHECKBOX,
-  payload: title
+export const toggleProfile = () => ({
+  type: types.TOGGLE_PROFILE
 })

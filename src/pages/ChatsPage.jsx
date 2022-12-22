@@ -1,17 +1,15 @@
-import {useEffect} from 'react'
 import {useParams, Navigate} from 'react-router-dom'
-
+import {useSelector} from "react-redux";
 import {Form} from '../components/Form/Form'
 import {MessageList} from '../components/MessageList/MessageList'
 import {ChatList} from '../components/ChatList/ChatList'
+import {selectMessage} from "../components/store/messages/selectors";
 
-import {AUTHOR} from '../constants'
 import IBox from "@mui/material/Box";
 import {styled} from '@mui/material/styles';
 import IPaper from '@mui/material/Paper';
 import IGrid from '@mui/material/Grid';
 import ITypography from "@mui/material/Typography";
-
 
 const Item = styled(IPaper)(({theme}) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,32 +19,9 @@ const Item = styled(IPaper)(({theme}) => ({
   color: theme.palette.text.secondary,
 }));
 
-export function ChatsPage({onAddChat, onAddMessage, messages, chats}) {
+export function ChatsPage() {
   const {chatId} = useParams()
-
-  useEffect(() => {
-    if (chatId &&
-      messages[chatId]?.length > 0 &&
-      messages[chatId][messages[chatId].length - 1].author === AUTHOR.user
-    ) {
-      const timeout = setTimeout(() => {
-        onAddMessage(chatId, {
-          author: AUTHOR.bot,
-          text: 'Im BOT'
-        })
-      }, 1500)
-
-      return () => {
-        clearTimeout(timeout)
-      }
-    }
-  }, [chatId, messages])
-
-  const handleAddMessage = (massage) => {
-    if (chatId) {
-      onAddMessage(chatId, massage)
-    }
-  }
+  const messages = useSelector(selectMessage)
 
   if (chatId && !messages[chatId]) {
     return <Navigate to="/chats" replace/>
@@ -57,14 +32,14 @@ export function ChatsPage({onAddChat, onAddMessage, messages, chats}) {
       <IBox sx={{flexGrow: 1}}>
         <IGrid container spacing={0.5}>
           <IGrid item xs={3}>
-            <Item><ChatList chats={chats} onAddChat={onAddChat} /></Item>
+            <Item><ChatList/></Item>
           </IGrid>
           <IGrid item xs={9}>
             <Item sx={{px: 10}}>
               {
                 chatId ? <>
-                  <MessageList messages={chatId ? messages[chatId] : []}/>
-                  <Form addMessage={handleAddMessage}/>
+                    <MessageList messages={chatId ? messages[chatId] : []}/>
+                    <Form/>
                   </> :
                   <ITypography height='90vh' variant="h4">
                     Выберите чат

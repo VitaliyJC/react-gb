@@ -1,1 +1,1 @@
-export const CHECKBOX = "CHECKBOX"
+export const TOGGLE_PROFILE = "TOGGLE_PROFILE"
