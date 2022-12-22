@@ -1,20 +1,15 @@
+import {toggleProfile} from "../components/store/profile/actions";
+import {selectVisible} from "../components/store/profile/selectors";
 import {useSelector, useDispatch} from "react-redux";
-import {changeCheckBox} from '../components/store/profile/actions'
-
 export function ProfilePage() {
-  const isChecked = useSelector((store) => store.toggle)
-
+  const visible = useSelector(selectVisible)
   const dispatch = useDispatch()
-
-  const handlerchangeCheckBox = (value) => {
-    dispatch(changeCheckBox(value))
-  }
 
   return (
     <>
       <h1>Profile Page</h1>
-
-      <input type="checkbox" value={isChecked} onChange={handlerchangeCheckBox}/>
+      <input type='checkbox' checked={visible} readOnly/>
+      <button onClick={() => dispatch(toggleProfile())}>change visible</button>
     </>
   )
 }

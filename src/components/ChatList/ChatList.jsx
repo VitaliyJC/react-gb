@@ -1,6 +1,8 @@
-import {useRef, useState} from "react"
+import {useState} from "react"
 import {Link} from 'react-router-dom'
-import {nanoid} from 'nanoid'
+import {useSelector, useDispatch} from "react-redux";
+import {selectChat} from "../store/messages/selectors";
+import {addChat, deleteChat} from "../store/messages/actions";
 
 import IList from '@mui/material/List';
 import IListItem from '@mui/material/ListItem';
@@ -15,36 +17,37 @@ import ITypography from '@mui/material/Typography';
 import ITextField from '@mui/material/TextField';
 import ISendIcon from "@mui/icons-material/Send";
 import IButton from '@mui/material/Button';
+import IClearIcon from '@mui/icons-material/Clear';
 
-export function ChatList({onAddChat, chats}) {
+export function ChatList() {
   const [value, setValue] = useState('')
-
-  const handleChange = (e) => {
-    setValue(e.target.value)
-  }
+  const dispatch = useDispatch()
+  const chats = useSelector(selectChat)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onAddChat({
-      id: nanoid(),
-      name: value
-    })
+    dispatch(addChat(value))
   }
 
   return (
     <>
-        <nav aria-label="main mailbox folders">
+      <nav aria-label="main mailbox folders">
         <IList>
-            {chats.map((chat) => (
-              <IListItem disablePadding key={chat.id}>
-                <IListItemButton>
-                  <IListItemIcon>
-                    <ITelegramIcon/>
-                  </IListItemIcon>
+          {chats.map((chat) => (
+            <IListItem disablePadding key={chat.id}>
+              <IListItemButton>
+                <IListItemIcon>
+                  <ITelegramIcon/>
+                </IListItemIcon>
                 <Link to={`/chats/${chat.name}`}>
                   {chat.name}
                 </Link>
-                </IListItemButton>
+              </IListItemButton>
+              <IListItemButton>
+                <IListItemIcon>
+                  <IClearIcon onClick={() => dispatch(deleteChat(chat.name))}/>
+                </IListItemIcon>
+              </IListItemButton>
               </IListItem>
             ))}
         </IList>
@@ -77,7 +80,7 @@ export function ChatList({onAddChat, chats}) {
         <ITextField
           type="text"
           value={value}
-          onChange={handleChange}
+          onChange={(e) => setValue(e.target.value)}
           id="standard-basic"
           label="Enter chat name"
           variant="standard"
