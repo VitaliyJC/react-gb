@@ -3,7 +3,6 @@ import ITypography from '@mui/material/Typography';
 import IDivider from '@mui/material/Divider';
 
 export function MessageList({messages}) {
-  console.log('messages', messages)
   return (
     <>
       <ITypography variant="h4">

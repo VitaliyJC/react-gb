@@ -1,5 +1,4 @@
 import {ADD_CHAT, DELETE_CHAT, ADD_MESSAGE} from "./actions";
-import {AUTHOR} from "../../../constants";
 
 const initialState = {
   default: [
@@ -34,8 +33,8 @@ export const messagesReducer = (state = initialState, action) => {
         [payload.chatName]: [
           ...state[payload.chatName],
           {
-            author: AUTHOR.user,
-            text: payload.text
+            author: payload.text.author,
+            text: payload.text.text
           }
         ]
       }
