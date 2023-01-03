@@ -5,6 +5,7 @@ import {ProfilePage} from './pages/ProfilePage'
 import {ChatsPage} from './pages/ChatsPage'
 import {NotFound} from "./pages/NotFound";
 import {Provider} from "react-redux";
+import {Articles} from "./pages/Articles";
 import {store, persistor} from "./components/store";
 import {PersistGate} from "redux-persist/integration/react";
 
@@ -25,6 +26,7 @@ export function App() {
                   element={<ChatsPage/>}
                 />
               </Route>
+              <Route path="articles" element={<Articles/>}/>
             </Route>
             <Route path="*" element={<NotFound/>}/>
           </Routes>

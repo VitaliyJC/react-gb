@@ -5,6 +5,7 @@ export function ProfilePage() {
   const visible = useSelector(selectVisible)
   const dispatch = useDispatch()
 
+
   return (
     <>
       <h1>Profile Page</h1>
