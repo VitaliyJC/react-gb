@@ -21,6 +21,6 @@ export const logOut = async () => await signOut(firebaseAuth)
 const db = getDatabase(app)
 export const userRef = ref(db, 'user')
 export const messagesRef = ref(db, 'messages')
-export const getChatByID = (chatId) => ref(db, `messages/${chatId}`)
+export const getChatById = (chatId) => ref(db, `messages/${chatId}`)
 
 export const getMessageListById = (chatId) => ref(db, `messages/${chatId}/messageList`)

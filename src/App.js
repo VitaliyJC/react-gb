@@ -22,7 +22,7 @@ import {ChatList} from "./components/ChatList/ChatList";
 
 export function App() {
   const dispatch = useDispatch()
-  const [messageDB, setMessageDB] = useState({})
+  const [messagesDB, setMessagesDB] = useState({})
   const [chats, setChats] = useState([])
 
   useEffect(() => {
@@ -45,8 +45,7 @@ export function App() {
         messages: item[1].messageList
       }))
 
-
-      setMessageDB(data)
+      setMessagesDB(data)
       setChats(newChats)
     })
   }, [])
@@ -58,14 +57,14 @@ export function App() {
           <Route path='/' element={<Header/>}>
             <Route index element={<MainPage/>}/>
             <Route path="profile" element={<ProfilePage/>}/>
-            <Route path="chats" element={<PrivateRoute/>}>
+            <Route path="chats" element={<PrivateRoute />}>
               <Route
                 index
-                element={<ChatList chats={chats} messageDB={messageDB}/>}
+                element={<ChatList chats={chats} messagesDB={messagesDB} />}
               />
               <Route
                 path=":chatId"
-                element={<ChatsPage chats={chats} messageDB={messageDB}/>}
+                element={<ChatsPage chats={chats} messagesDB={messagesDB} />}
               />
             </Route>
             <Route path="articles" element={<Articles/>}/>
