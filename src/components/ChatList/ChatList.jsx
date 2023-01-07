@@ -4,6 +4,9 @@ import {useSelector, useDispatch} from "react-redux";
 import {selectChat} from "../store/messages/selectors";
 import {addChat, deleteChat} from "../store/messages/actions";
 
+import {push, set, remove} from "firebase/database";
+import {messagesRef} from "../../services/firebase";
+
 import IList from '@mui/material/List';
 import IListItem from '@mui/material/ListItem';
 import IListItemButton from '@mui/material/ListItemButton';
@@ -19,14 +22,21 @@ import ISendIcon from "@mui/icons-material/Send";
 import IButton from '@mui/material/Button';
 import IClearIcon from '@mui/icons-material/Clear';
 
-export function ChatList() {
+export function ChatList({messageDB, chats}) {
   const [value, setValue] = useState('')
   const dispatch = useDispatch()
-  const chats = useSelector(selectChat)
+  // const chats = useSelector(selectChat)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(addChat(value))
+
+    set(messagesRef, {
+      ...messageDB,
+      [value]: {
+        name: value
+      }
+    })
   }
 
   return (

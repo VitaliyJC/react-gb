@@ -1,6 +1,7 @@
 import {compose, createStore, combineReducers, applyMiddleware} from 'redux'
 import {profileReducer} from "./profile/reducer";
 import {messagesReducer} from "./messages/reducer";
+import {articlesReducer} from "./articles/reducer";
 import thunk from "redux-thunk";
 import storage from 'redux-persist/lib/storage'
 import {persistStore, persistReducer} from "redux-persist";
@@ -14,7 +15,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   profile: profileReducer,
-  messages: messagesReducer
+  messages: messagesReducer,
+  articles: articlesReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -4,6 +4,9 @@ import {useParams} from "react-router-dom";
 import {addMessageWithReply} from "../store/messages/actions";
 import {AUTHOR} from "../../constants";
 
+import {push} from "firebase/database";
+import {getMessageListById} from "../../services/firebase";
+
 import IButton from '@mui/material/Button';
 import ITextField from '@mui/material/TextField';
 import ISendIcon from '@mui/icons-material/Send';
@@ -20,6 +23,10 @@ export function Form() {
       author: AUTHOR.user,
       text
     }))
+    push(getMessageListById(chatId), {
+      author: AUTHOR.user,
+      text
+    })
 
     setText('')
   }
