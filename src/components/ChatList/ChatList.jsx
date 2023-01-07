@@ -1,11 +1,10 @@
 import {useState} from "react"
 import {Link} from 'react-router-dom'
-import {useSelector, useDispatch} from "react-redux";
-import {selectChat} from "../store/messages/selectors";
-import {addChat, deleteChat} from "../store/messages/actions";
+import {useDispatch} from "react-redux";
+import {addChat} from "../store/messages/actions";
 
 import {push, set, remove} from "firebase/database";
-import {messagesRef} from "../../services/firebase";
+import {messagesRef, getChatById, getMessageListById} from "../../services/firebase";
 
 import IList from '@mui/material/List';
 import IListItem from '@mui/material/ListItem';
@@ -22,21 +21,31 @@ import ISendIcon from "@mui/icons-material/Send";
 import IButton from '@mui/material/Button';
 import IClearIcon from '@mui/icons-material/Clear';
 
-export function ChatList({messageDB, chats}) {
+export function ChatList({messagesDB, chats}) {
   const [value, setValue] = useState('')
   const dispatch = useDispatch()
-  // const chats = useSelector(selectChat)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(addChat(value))
 
     set(messagesRef, {
-      ...messageDB,
+      ...messagesDB,
       [value]: {
         name: value
       }
     })
+
+    push(getMessageListById(value), {
+      text: 'Welcome to chat',
+      author: 'Admin',
+    });
+
+    setValue('');
+  }
+
+  const handleDeleteChat = (chatId) => {
+    remove(getChatById(chatId));
   }
 
   return (
@@ -44,7 +53,7 @@ export function ChatList({messageDB, chats}) {
       <nav aria-label="main mailbox folders">
         <IList>
           {chats.map((chat) => (
-            <IListItem disablePadding key={chat.id}>
+            <IListItem disablePadding key={chat.name}>
               <IListItemButton>
                 <IListItemIcon>
                   <ITelegramIcon/>
@@ -55,7 +64,7 @@ export function ChatList({messageDB, chats}) {
               </IListItemButton>
               <IListItemButton>
                 <IListItemIcon>
-                  <IClearIcon onClick={() => dispatch(deleteChat(chat.name))}/>
+                  <IClearIcon onClick={() => dispatch(handleDeleteChat(chat.name))}/>
                 </IListItemIcon>
               </IListItemButton>
               </IListItem>

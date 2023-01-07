@@ -55,7 +55,7 @@ export function Form() {
           endIcon={<ISendIcon/>}
           sx={{my: 2}}
         >
-          Add message</IButton>
+          Send message</IButton>
       </form>
 
     </>

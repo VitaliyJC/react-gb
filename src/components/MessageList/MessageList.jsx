@@ -8,7 +8,7 @@ export function MessageList({messages}) {
       <ITypography variant="h4">
         MessageList
       </ITypography>
-      {messages.map((message, index) => (
+      {messages?.map((message, index) => (
         <IBox key={index} sx={{
           bgcolor: 'background.paper',
           boxShadow: 2,
